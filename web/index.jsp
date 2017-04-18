@@ -54,6 +54,9 @@
         i {
             padding: 3px;
         }
+        .white {
+            color:white;
+        }
         #main {
             width: 100%;
             height: 100%;
@@ -85,7 +88,7 @@
     </style>
 </head>
 <body>
-    Link zum Cloud-Ordner: <a href="<%= FileSystemListener.getCloudUrl()%>"><%= FileSystemListener.getCloudUrl()%></a>
+    Link zum Cloud-Ordner(Passwort: cs16-1): <a href="<%= FileSystemListener.getCloudUrl()%>"><%= FileSystemListener.getCloudUrl()%></a>
     <div id="main">
         <table width="100%" style="border: none">
             <tr>

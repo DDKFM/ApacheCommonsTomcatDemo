@@ -28,53 +28,64 @@ public class FileServlet extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         PrintWriter writer = response.getWriter();
 
+        response.setContentType("text/html");
         if(System.getProperty("monitoredDirectory") != null) {
             String monitoredDirectory = System.getProperty("monitoredDirectory");
             parentFile = new File(monitoredDirectory);
+            //writer.append("monitoredDirectory: " + monitoredDirectory  + "<br/>");
+            //writer.append(parentFile.toString() + "<br/>");
+            //writer.append(parentFile.getAbsolutePath() + "<br/>");
+            //writer.append("Exists: " + parentFile.exists() + "<br/>");
         }
+        //writer.append(parentFile.getAbsolutePath());
         if (parentFile != null && parentFile.exists()) {
-            if(request.getParameter("method") != null) {
-                switch(request.getParameter("method").toLowerCase().trim()) {
-                    case "files":
-                        response.setContentType("text/html");
-                        File[] childFiles = parentFile.listFiles();
-                        for(File file : childFiles) {
-                            writer.append("<div id=\"fileEntry\">");
-                            Map<String, String> iconMap = new HashMap<String, String>();
-                            String extension = FilenameUtils.getExtension(file.getName());
-                            iconMap.put("txt", "fa-file-o");
-                            iconMap.put("java", "fa-file-code-o");
-                            String icon = iconMap.containsKey(extension) ? iconMap.get(extension) : "";
-                            writer.append("<i class=\"fa " + icon + "\"></i>");
-                            writer.append("<a href=\"javascript:loadFileContent('" + file.getName() + "');\">" + file.getName() + "</a>");
-                            writer.append("</div>");
-                        }
-                        break;
-                    case "filecontent":
-                        if(request.getParameter("filename") != null) {
-                            String filename = request.getParameter("filename");
-                            File childFile = new File(parentFile.getAbsolutePath() + File.separator + filename);
-                            if(childFile != null && childFile.exists()) {
-                                byte[] fileData = Files.readAllBytes(childFile.toPath());
-                                writer.append(new String(fileData));
+            try {
+                if(request.getParameter("method") != null) {
+                    switch(request.getParameter("method").toLowerCase().trim()) {
+                        case "files":
+                            File[] childFiles = parentFile.listFiles();
+                            for(File file : childFiles) {
+                                writer.append("<div id=\"fileEntry\">");
+                                Map<String, String> iconMap = new HashMap<String, String>();
+                                String extension = FilenameUtils.getExtension(file.getName());
+                                iconMap.put("txt", "fa-file-o");
+                                iconMap.put("java", "fa-file-code-o");
+                                iconMap.put("", "fa-folder");
+                                iconMap.put("zip", "fa-archive-o");
+                                String icon = iconMap.containsKey(extension) ? iconMap.get(extension) : "";
+                                writer.append("<i class=\"fa " + (!icon.equals("") ? icon : "fa-folder white") + "\"></i>");
+                                writer.append("<a href=\"javascript:loadFileContent('" + file.getName() + "');\">" + file.getName() + "</a>");
+                                writer.append("</div>");
                             }
-                        }
-                        break;
-                    case "log":
-                        response.setContentType("text/html");
-                        TreeMap<Date, String> logs = FileSystemListener.getLogs();
+                            break;
+                        case "filecontent":
+                            if(request.getParameter("filename") != null) {
+                                String filename = request.getParameter("filename");
+                                File childFile = new File(parentFile.getAbsolutePath() + File.separator + filename);
+                                if(childFile != null && childFile.exists()) {
+                                    byte[] fileData = Files.readAllBytes(childFile.toPath());
+                                    writer.append(new String(fileData));
+                                }
+                            }
+                            break;
+                        case "log":
+                            response.setContentType("text/html");
+                            TreeMap<Date, String> logs = FileSystemListener.getLogs();
 
-                        int countEntries = 0;
+                            int countEntries = 0;
 
-                        for (Date key : logs.keySet()) {
-                            if(countEntries > 20)
-                                break;
-                            String formatedDate = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(key);
-                            writer.append("<div id=\"logEntry\">" + countEntries + ": " + formatedDate + ": " + logs.get(key) + "</div>");
-                            countEntries++;
-                        }
-                        break;
+                            for (Date key : logs.keySet()) {
+                                if(countEntries > 20)
+                                    break;
+                                String formatedDate = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(key);
+                                writer.append("<div id=\"logEntry\">" + countEntries + ": " + formatedDate + ": " + logs.get(key) + "</div>");
+                                countEntries++;
+                            }
+                            break;
+                    }
                 }
+            } catch (IOException e) {
+                writer.append("Error: " + e);
             }
         } else {
             writer.append("<h1>Kein Ordner gefunden</h1>");
