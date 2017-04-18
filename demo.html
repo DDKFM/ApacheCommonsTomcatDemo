@@ -1,11 +1,9 @@
 
-
-
-<html>
-<head>
+<!-- saved from url=(0022)http://localhost:8080/ -->
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <title>Apache Commons IO Demo</title>
-    <link rel="stylesheet" type="text/css" href="css/font-awesome.min.css"/>
-    <script type="text/javascript" src="js/jquery.js"></script>
+    <link rel="stylesheet" type="text/css" href="./demo_files/font-awesome.min.css">
+    <script type="text/javascript" src="./demo_files/jquery.js.Download"></script>
     <script type="text/javascript">
         $(document).ready(function() {
             loadFileList();
@@ -80,31 +78,33 @@
     </style>
 </head>
 <body>
-Link zum Cloud-Ordner: <a href="https://cloud.zoe2.de/index.php/s/D6Kqtsw8hlhYhtI">https://cloud.zoe2.de/index.php/s/D6Kqtsw8hlhYhtI</a>
-<div id="main">
-    <table width="100%" style="border: none">
-        <tr>
-            <td width="50%">
-                <Label><strong>Dateien: </strong></Label>
-            </td>
-            <td>
-                <Label><strong>Dateinhalt: </strong></Label>
-            </td>
-        </tr>
-        <tr>
-            <td width="50%">
-                <div id="fileList"></div>
-            </td>
-            <td>
-                <pre id="fileContent"></pre>
-            </td>
-        </tr>
-        <tr>
-            <td colspan="2">
-                <Label><strong>Log: </strong></Label>
-                <div id="logs"></div>
-            </td>
-        </tr>
-    </table>
-</body>
-</html>
+    Link zum Cloud-Ordner: <a href="https://cloud.zoe2.de/index.php/s/D6Kqtsw8hlhYhtI">https://cloud.zoe2.de/index.php/s/D6Kqtsw8hlhYhtI</a>
+    <div id="main">
+        <table width="100%" style="border: none">
+            <tbody><tr>
+                <td width="50%">
+                    <label><strong>Dateien: </strong></label>
+                </td>
+                <td>
+                    <label><strong>Dateinhalt: </strong></label>
+                </td>
+            </tr>
+            <tr>
+                <td width="50%">
+                    <div id="fileList"><div id="fileEntry"><i class="fa fa-file-code-o"></i><a href="javascript:loadFileContent(&#39;EinJavaProgramm.java&#39;);">EinJavaProgramm.java</a></div><div id="fileEntry"><i class="fa fa-file-o"></i><a href="javascript:loadFileContent(&#39;HalloWelt.txt&#39;);">HalloWelt.txt</a></div></div>
+                </td>
+                <td>
+                    <pre id="fileContent">jdsfijdof jdaoifj idf
+The Cake is a lie</pre>
+                </td>
+            </tr>
+            <tr>
+                <td colspan="2">
+                    <label><strong>Log: </strong></label>
+                    <div id="logs"><div id="logEntry">0: 2017-04-18 11:48:02: Datei: Neues Textdokument.txt erstellt</div><div id="logEntry">1: 2017-04-18 11:48:09: Datei: Neues Textdokument.txt gelöscht</div><div id="logEntry">2: 2017-04-18 11:48:30: Datei: Neues Textdokument.txt erstellt</div><div id="logEntry">3: 2017-04-18 11:48:36: Datei: Neues Textdokument.txt gelöscht</div></div>
+                </td>
+            </tr>
+        </tbody></table>
+
+
+</div></body></html>
